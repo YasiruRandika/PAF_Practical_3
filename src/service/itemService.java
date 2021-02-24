@@ -23,6 +23,6 @@ public interface itemService {
 	 * @param price double
 	 * @param desc String
 	 */
-	public String insertItem(String code, String name, double price, String desc);
+	public String insertItem(String code, String name, String price, String desc);
 
 }
