@@ -3,7 +3,6 @@ package service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
@@ -98,6 +97,7 @@ public class ItemServiceImpl implements itemService{
 				item.setItemName(resultSet.getString(3));
 				item.setItemPrice(resultSet.getFloat(4));
 				item.setItemDesc(resultSet.getString(5));
+				System.out.println(item.getItemDesc());
 				items.add(item);
 			}
 			
@@ -240,12 +240,13 @@ public class ItemServiceImpl implements itemService{
 			}
 			
 			//Create Statement
-			String sql = "SELECT * FROM Item";
+			String sql = "SELECT * FROM Item WHERE id = ?";
 			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
 			
 			//execute the statement
 			ResultSet resultSet = preparedStatement.executeQuery();
-			preparedStatement.setInt(1, id);
+			
 			
 			while (resultSet.next()) {
 				item.setItemID(resultSet.getInt(1));
