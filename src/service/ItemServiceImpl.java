@@ -13,7 +13,6 @@ import util.ConnectDB;
 public class ItemServiceImpl implements itemService{
 	private static Connection connection;
 	private static PreparedStatement preparedStatement;
-	private static Statement statement;
 	
 	/*
 	 * Method implementation for Insert Item
@@ -87,18 +86,18 @@ public class ItemServiceImpl implements itemService{
 			
 			//Create Statement
 			String sql = "SELECT * FROM Item";
+			preparedStatement = connection.prepareStatement(sql);
 			
 			//execute the statement
-			ResultSet resultSet = statement.executeQuery(sql);
-			connection.close();
+			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
 				Item item  = new Item();
-				item.setItemID(resultSet.getInt(0));
-				item.setItemCode(resultSet.getString(1));
-				item.setItemName(resultSet.getString(2));
-				item.setItemPrice(resultSet.getFloat(3));
-				
+				item.setItemID(resultSet.getInt(1));
+				item.setItemCode(resultSet.getString(2));
+				item.setItemName(resultSet.getString(3));
+				item.setItemPrice(resultSet.getFloat(4));
+				item.setItemDesc(resultSet.getString(5));
 				items.add(item);
 			}
 			
@@ -109,8 +108,8 @@ public class ItemServiceImpl implements itemService{
 			 * Close statement and database connectivity at the end of transaction
 			 */
 			try {
-				if (statement != null) {
-					statement.close();
+				if (preparedStatement != null) {
+					preparedStatement.close();
 				}
 				if (connection != null) {
 					connection.close();
@@ -119,7 +118,6 @@ public class ItemServiceImpl implements itemService{
 				logger.log(Level.SEVERE, e.getMessage());
 			}
 		}
-		
 		return items;
 	}
 
@@ -222,7 +220,59 @@ public class ItemServiceImpl implements itemService{
 				logger.log(Level.SEVERE, e.getMessage());
 			}
 		}
-		return null;
+		return output;
+	}
+
+	/*
+	 * Method implementation for Get an Item by Id
+	 * Follow itemService.java for the method description
+	 * 
+	 * */
+	@Override
+	public Item getItemById(int id) {
+		Item item  = new Item();
+		try {
+			connection = ConnectDB.getDBConnection();
+			
+			//Check whether properly connected or not
+			if (connection == null) {
+				logger.log(Level.SEVERE, "Connection Error");
+			}
+			
+			//Create Statement
+			String sql = "SELECT * FROM Item";
+			preparedStatement = connection.prepareStatement(sql);
+			
+			//execute the statement
+			ResultSet resultSet = preparedStatement.executeQuery();
+			preparedStatement.setInt(1, id);
+			
+			while (resultSet.next()) {
+				item.setItemID(resultSet.getInt(1));
+				item.setItemCode(resultSet.getString(2));
+				item.setItemName(resultSet.getString(3));
+				item.setItemPrice(resultSet.getFloat(4));
+				item.setItemDesc(resultSet.getString(5));
+			}
+			
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, e.getMessage());
+		} finally {
+			/*
+			 * Close statement and database connectivity at the end of transaction
+			 */
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (java.sql.SQLException e) {
+				logger.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		return item;
 	}
 
 }

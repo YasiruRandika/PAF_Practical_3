@@ -57,5 +57,15 @@ public interface itemService {
 	 * @return status
 	 */
 	public String updateItem(int id, String code, String name, String price, String desc);
+	
+	
+	/**
+	 * Get Item By Id
+	 * 
+	 * This method will get an item from  mysql database
+	 * @param id Integer
+	 * @return Item
+	 */
+	public Item getItemById(int id);
 
 }

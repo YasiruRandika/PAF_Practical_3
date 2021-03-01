@@ -10,7 +10,7 @@ itemService itemService = new ItemServiceImpl();
  //Insert an Item
 if (request.getParameter("itemCode") != null)
  {
- Item itemObj = new Item();
+	System.out.println(request.getParameter("itemName"));
  String stsMsg = itemService.insertItem(request.getParameter("itemCode"),
  request.getParameter("itemName"),
  request.getParameter("itemPrice"),
@@ -43,6 +43,8 @@ if (request.getParameter("itemCode") != null)
 <td>Item Name</td>
 <td>Price</td>
 <td>Description</td>
+<td></td>
+<td></td>
 </tr>
 
 <%
@@ -50,12 +52,12 @@ if (request.getParameter("itemCode") != null)
  for(Item item : items) {
 %>
 <tr>
-<td><%item.getItemCode(); %></td>
-<td><%item.getItemName(); %></td>
-<td><%item.getItemPrice(); %></td>
-<td><%item.getItemDesc(); %></td>
-<td><form action="index.jsp"><input name="dltId" value="<%item.getItemCode();%> hidden"><input type="submit" value="Delete"></form></td>
-<td><form action="index.jsp"><input name="updateId" value="<%item.getItemCode();%> hidden"><input type="submit" value="Update"></form></td>
+<td><%=item.getItemCode() %></td>
+<td><%=item.getItemName() %></td>
+<td><%=item.getItemPrice() %></td>
+<td><%=item.getItemDesc() %></td>
+<td><form action="index.jsp"><input name="dltId" value="<%item.getItemCode();%>"hidden><input type="submit" value="Delete"></form></td>
+<td><form action="index.jsp"><input name="updateId" value="<%item.getItemCode();%>"hidden><input type="submit" value="Update"></form></td>
 </tr>
 <%} %>
 </table>
