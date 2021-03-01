@@ -10,7 +10,7 @@ public class Item {
 	private int itemID;
 	private String itemCode;
 	private String itemName;
-	private String itemPrice;
+	private float itemPrice;
 	private String itemDesc;
 	
 	//Default Constructor
@@ -19,7 +19,7 @@ public class Item {
 	}
 
 	//Overloaded Constructor
-	public Item(int itemID, String itemCode, String itemName, String itemPrice, String itemDesc) {
+	public Item(int itemID, String itemCode, String itemName, float itemPrice, String itemDesc) {
 		super();
 		this.itemID = itemID;
 		this.itemCode = itemCode;
@@ -54,11 +54,11 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public String getItemPrice() {
+	public float getItemPrice() {
 		return itemPrice;
 	}
 
-	public void setItemPrice(String itemPrice) {
+	public void setItemPrice(float itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 
