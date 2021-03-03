@@ -45,59 +45,95 @@ if(request.getParameter("dltId") != null) {
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>PAF</title>
+<link rel="stylesheet" href="CSS/bootstrap.css">
+<link rel="stylesheet" href="CSS/index.css">
 </head>
 <body>
-<h1>Items Management</h1>
-<form method="post" action="index.jsp">
+<h1 class="display-6">Items Management</h1>
+<hr>
+<br>
+<div class="d-flex flex-lg-row flex-sm-column justify-content-around">
+<div>
+<%if(stsMsg != "") { %>
+<div class="alert alert-primary" style="max-width:350px; margin:20px" role="alert">
+  <%=stsMsg %>
+</div>
+<%} %>
+<form class="inputForm" method="post" action="index.jsp">
  <%if(!update){ %>
- Item code: <input name="itemCode" type="text" required><br> 
- Item name: <input name="itemName" type="text" required><br> 
- Item price: <input name="itemPrice" type="text" required><br> 
- Item description: <input name="itemDesc" type="text" required><br> 
- 
- <input name="btnSubmit" type="submit" value="Save">
+ <div class="form-group">
+    <label for="itemCode">Item Code</label>
+    <input class="form-control" name="itemCode" type="text" required>
+ </div>
+ <div class="form-group">
+    <label for="itemName">Item Name</label>
+   <input class="form-control" name="itemName" type="text" required>
+ </div>
+  <div class="form-group">
+    <label for="itemPrice">Price</label>
+   <input class="form-control" name="itemPrice" type="text" required>
+ </div>
+  <div class="form-group">
+    <label for="itemDesc">Description</label>
+   <input class="form-control" name="itemDesc" type="text" required>
+ </div>
+ <button type="submit" class="btn btn-primary">Save</button>
  <%} else { %>
  <input name="itemId" value="<%=itemModel.getItemID()%>"hidden>
- Item code: <input name="itemCode" type="text" value="<%=itemModel.getItemCode()%>" required><br> 
- Item name: <input name="itemName" type="text" value="<%=itemModel.getItemName()%>" required><br> 
- Item price: <input name="itemPrice" type="text" value="<%=itemModel.getItemPrice()%>" required><br> 
- Item description: <input name="itemDesc" type="text" value="<%=itemModel.getItemDesc()%>" required><br> 
- <input name="btnSubmit" type="submit" value="Update">
+ <div class="form-group">
+    <label for="itemCode">Item Code</label>
+    <input class="form-control" value="<%=itemModel.getItemCode() %>" name="itemCode" type="text" required>
+ </div>
+ <div class="form-group">
+    <label for="itemName">Item Name</label>
+   <input class="form-control" value="<%=itemModel.getItemName() %>" name="itemName" type="text" required>
+ </div>
+  <div class="form-group">
+    <label for="itemPrice">Price</label>
+   <input class="form-control" value="<%=itemModel.getItemPrice() %>" name="itemPrice" type="text" required>
+ </div>
+  <div class="form-group">
+    <label for="itemDesc">Description</label>
+   <input class="form-control" value="<%=itemModel.getItemDesc() %>" name="itemDesc" type="text" required>
+ </div>
+ <button type="submit" class="btn btn-success">Update</button>
  <%} %>
 </form>
+</div>
 
-<br>
-<%
- out.print(session.getAttribute("statusMsg"));
-%>
-<br>
-
+<div>
 <% ArrayList<Item> items = itemService.getItems(); 
 if(items.size() > 0) {%>
-<table border="1">
+<table class="table" border="1">
+<thead class="thead-dark">
 <tr>
-<td>Item Code</td>
-<td>Item Name</td>
-<td>Price</td>
-<td>Description</td>
+<th scope="col">Item Code</th>
+<th scope="col">Item Name</th>
+<th scope="col">Price</th>
+<th scope="col">Description</th>
+<th></th>
+<th></th>
 </tr>
-
+</thead>
+<tbody>
 <%
  for(Item item : items) {
 %>
-<tr>
-<td><%=item.getItemCode() %></td>
-<td><%=item.getItemName() %></td>
-<td><%=item.getItemPrice() %></td>
-<td><%=item.getItemDesc() %></td>
-<td><form action="index.jsp"><input name="dltId" value="<%=item.getItemID()%>"hidden><input type="submit" value="Delete"></form></td>
-<td><form action="index.jsp"><input name="updateId" value="<%=item.getItemID()%>"hidden><input type="submit" value="Update"></form></td>
+<tr class="trow">
+<td><div ><%=item.getItemCode() %></div></td>
+<td><div><%=item.getItemName() %></div></td>
+<td><div ><%=item.getItemPrice() %></div></td>
+<td><div><%=item.getItemDesc() %></div></td>
+<td><div class="d-flex justify-content-center"><form action="index.jsp"><input name="dltId" value="<%=item.getItemID()%>"hidden><button  class="btn btn-danger" type="submit">Delete</button></form></div></td>
+<td><div class="d-flex justify-content-center"><form action="index.jsp"><input name="updateId" value="<%=item.getItemID()%>"hidden><button class="btn btn-warning" type="submit">Update</button></form></div></td>
 </tr>
 <%} %>
+</tbody>
 </table>
 <%} %>
-<br>
+</div>
+</div>
 
 </body>
 </html>
