@@ -54,7 +54,7 @@ if(request.getParameter("dltId") != null) {
 <hr>
 <br>
 <div class="d-flex flex-lg-row flex-sm-column justify-content-around">
-<div>
+<div class="bd-callout bd-callout-info">
 <%if(stsMsg != "") { %>
 <div class="alert alert-primary" style="max-width:350px; margin:20px" role="alert">
   <%=stsMsg %>
